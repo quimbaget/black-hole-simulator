@@ -1,11 +1,5 @@
 import numpy as PI
-import pandas as pd
-from matplotlib import pyplot as plt
-import plotly.express as px
-from plotly import __version__
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
-import cufflinks as cf
-import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 G = 4 * PI.pi**2
 
@@ -35,21 +29,22 @@ def euler_method(x0, y0, vx0, vy0, relativeHoleMass, relativeStarMass, xPosition
     return orbitEnergy
 
 def print_plot(xPositions, yPositions):
-    figure = plt.figure()
-    axes1 = figure.add_axes([0,0,1,1])
-    axes1.plot(xPositions,yPositions)
-    axes1.set(title='An incomplete simulation',xlabel='X',ylabel='Y')
-    axes1.axis('equal')
-    circle1 = plt.Circle((0, 0), .08, color='orange')
-    axes1.add_artist(circle1)
+    fig, ax = plt.subplots()
+    ax.plot(xPositions,yPositions)
+    circle = plt.Circle((0, 0), .08, color='orange')
+    ax.add_patch(circle)
+    ax.set(title='An incomplete simulation',xlabel='X',ylabel='Y')
+    left_x, right_x = ax.get_xlim()
+    low_y, high_y = ax.get_ylim()
+    ax.set_aspect(abs((right_x-left_x)/(low_y-high_y)))
     plt.show()
 
 def main():
     # DEFNINIM LES VARIABLES INCICIALS
-    distanceFromHoleToStar = 1.49e+11 # Distància del forat negre a l'estrella en astronomical units
-    starPeriod = 3.1514e+7 # Període en segons de l'estrella al voltant del forat negre
-    blackHoleMass = 1.89928438e+14 # Massa en Kg del forat negre
-    blackHoleRadius = 0.235974 # Radi del forat negre en astronomical units
+    # distanceFromHoleToStar = 1.49e+11 # Distància del forat negre a l'estrella en astronomical units
+    # starPeriod = 3.1514e+7 # Període en segons de l'estrella al voltant del forat negre
+    # blackHoleMass = 1.89928438e+14 # Massa en Kg del forat negre
+    # blackHoleRadius = 0.235974 # Radi del forat negre en astronomical units
 
     blackHoleIsXTimesStar = 4 # Quantes vegades més gran es el forat negre respecte l'estrella
 
